@@ -8,13 +8,14 @@ CARDS_FILE = "cards.txt"
 BIN_FILE = "BIN.txt"
 VALID_CARDS_FILE = "valid.txt"
 
+# Regular expression pattern for validating URLs
 URL_PATTERN = re.compile(
-    r'^(?:http|ftp)s?://'  # http:// or https://
-    r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
-    r'localhost|'  # localhost...
-    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
-    r'(?::\d+)?'  # optional port
-    r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    r'^(?:http|ftp)s?://'  # http:// or https://
+    r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
+    r'localhost|'  # localhost...
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+    r'(?::\d+)?'  # optional port
+    r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
 # Load data from files
 def load_file(filename):
@@ -170,18 +171,13 @@ def display_menu():
     print("3. Add BIN Numbers")
     print("4. Create Credit Cards")
     print("5. Check and Save Valid Cards")
-    print("6. View Bank APIs")
-    print("7. View BIN Numbers")
-    print("8. View Generated Cards")
-    print("9. View Valid Cards")
-    print("10. Clear Data")
-    print("11. Exit")
+    print("6. Exit")
 
 # Main function to run the script
 def main():
     while True:
         display_menu()
-        choice = input("Enter your choice (1-11): ")
+        choice = input("Enter your choice (1-6): ")
         if choice == "1":
             add_bank_api()
         elif choice == "2":
@@ -193,20 +189,10 @@ def main():
         elif choice == "5":
             check_and_save_valid_cards()
         elif choice == "6":
-            view_bank_apis()
-        elif choice == "7":
-            view_bin_numbers()
-        elif choice == "8":
-            view_generated_cards()
-        elif choice == "9":
-            view_valid_cards()
-        elif choice == "10":
-            clear_data()
-        elif choice == "11":
             print("Exiting program.")
             break
         else:
-            print("Invalid choice. Please enter a number between 1 and 11.")
+            print("Invalid choice. Please enter a number between 1 and 6.")
 
 if __name__ == "__main__":
     main()
