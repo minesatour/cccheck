@@ -128,10 +128,9 @@ def create_credit_cards():
         if num_cards <= 0:
             raise ValueError("Number of cards must be a positive integer.")
         cards = []
-        for i in range(num_cards):
+        for _ in range(num_cards):
             bin_number = random.choice(bins)
             cards.append(generate_credit_card(bin_number))
-            print(f"Generated {i+1} out of {num_cards} credit cards.")
         save_file(CARDS_FILE, cards)
         print(f"{num_cards} credit cards generated and saved.")
     except ValueError as e:
@@ -141,10 +140,9 @@ def create_credit_cards():
 def check_and_save_valid_cards():
     cards = load_file(CARDS_FILE)
     valid_cards = []
-    for i, card in enumerate(cards, start=1):
+    for card in cards:
         if is_valid_credit_card_super(card):
             valid_cards.append(card)
-        print(f"Checked {i} out of {len(cards)} credit cards.")
    
     if valid_cards:
         save_valid_cards(valid_cards)
@@ -196,6 +194,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
