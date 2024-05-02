@@ -15,7 +15,8 @@ URL_PATTERN = re.compile(
     r'localhost|'  # localhost...
     r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
     r'(?::\d+)?'  # optional port
-    r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    r'(?:/?|[/?]\S+)$', re.IGNORECASE
+)
 
 # Load data from files
 def load_file(filename):
@@ -128,9 +129,10 @@ def create_credit_cards():
         if num_cards <= 0:
             raise ValueError("Number of cards must be a positive integer.")
         cards = []
-        for _ in range(num_cards):
+        for i in range(num_cards):
             bin_number = random.choice(bins)
             cards.append(generate_credit_card(bin_number))
+            print(f"Generated {i+1} out of {num_cards} credit cards.")
         save_file(CARDS_FILE, cards)
         print(f"{num_cards} credit cards generated and saved.")
     except ValueError as e:
@@ -140,9 +142,10 @@ def create_credit_cards():
 def check_and_save_valid_cards():
     cards = load_file(CARDS_FILE)
     valid_cards = []
-    for card in cards:
+    for i, card in enumerate(cards, start=1):
         if is_valid_credit_card_super(card):
             valid_cards.append(card)
+        print(f"Checked {i} out of {len(cards)} credit cards.")
 
     if valid_cards:
         save_valid_cards(valid_cards)
@@ -162,6 +165,54 @@ def save_valid_cards(valid_cards):
     except Exception as e:
         print(f"Error: {e}")
 
+# View bank APIs
+def view_bank_apis():
+    bank_apis = load_file(BANK_API_FILE)
+    if bank_apis:
+        print("Bank APIs:")
+        for api in bank_apis:
+            print(api)
+    else:
+        print("No bank APIs found.")
+
+# View BIN numbers
+def view_bin_numbers():
+    bins = load_file(BIN_FILE)
+    if bins:
+        print("BIN Numbers:")
+        for bin_number in bins:
+            print(bin_number)
+    else:
+        print("No BIN numbers found.")
+
+# View generated cards
+def view_generated_cards():
+    cards = load_file(CARDS_FILE)
+    if cards:
+        print("Generated Credit Cards:")
+        for card in cards:
+            print(card)
+    else:
+        print("No generated credit cards found.")
+
+# View valid cards
+def view_valid_cards():
+    valid_cards = load_file(VALID_CARDS_FILE)
+    if valid_cards:
+        print("Valid Credit Cards:")
+        for card_info in valid_cards:
+            print(card_info)
+    else:
+        print("No valid credit cards found.")
+
+# Clear data from files
+def clear_data():
+    save_file(BANK_API_FILE, [])
+    save_file(CARDS_FILE, [])
+    save_file(BIN_FILE, [])
+    save_file(VALID_CARDS_FILE, [])
+    print("Data cleared successfully.")
+
 # Display menu options
 def display_menu():
     print("\n1. Add Bank API")
@@ -169,13 +220,18 @@ def display_menu():
     print("3. Add BIN Numbers")
     print("4. Create Credit Cards")
     print("5. Check and Save Valid Cards")
-    print("6. Exit")
+    print("6. View Bank APIs")
+    print("7. View BIN Numbers")
+    print("8. View Generated Cards")
+    print("9. View Valid Cards")
+    print("10. Clear Data")
+    print("11. Exit")
 
 # Main function to run the script
 def main():
     while True:
         display_menu()
-        choice = input("Enter your choice (1-6): ")
+        choice = input("Enter your choice (1-11): ")
         if choice == "1":
             add_bank_api()
         elif choice == "2":
@@ -187,13 +243,21 @@ def main():
         elif choice == "5":
             check_and_save_valid_cards()
         elif choice == "6":
+            view_bank_apis()
+        elif choice == "7":
+            view_bin_numbers()
+        elif choice == "8":
+            view_generated_cards()
+        elif choice == "9":
+            view_valid_cards()
+        elif choice == "10":
+            clear_data()
+        elif choice == "11":
             print("Exiting program.")
             break
         else:
-            print("Invalid choice. Please enter a number between 1 and 6.")
+            print("Invalid choice. Please enter a number between 1 and 11.")
 
 if __name__ == "__main__":
     main()
-
-
 
